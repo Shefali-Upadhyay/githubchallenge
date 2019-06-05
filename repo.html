@@ -57,30 +57,22 @@
     <div>
       <div class="container rounded text-center bg-success mb-4 mt-5">
         <div class="container input-group py-4">
-          <input type="text" id="username" placeholder="Github username..." class="form-control" autocomplete="off">
+          <input type="text" id="username" placeholder="Github UserName..." class="form-control" autocomplete="off">
           <div class="input-group-append">
             <button type="button" class="btn btn-primary" id="search"><i class="fa fa-search" aria-hidden="true"></i></button>
           </div>
         </div>
       </div>
-      <div class="container border border-dark rounded p-5" id="view">
-        <div class="mb-3 rounded border border-dark" id="result">
-          <h1>USER DETAILS</h1>
+      <div class="container border border-dark rounded p-5 mb-4 bg-danger" id="view">
+        <div class="mb-3 rounded border border-dark bg-warning" id="result">
           <!-- user details -->
         </div>
         
-        <div class="container-fluid p-3 rounded border border-dark">
-          <h1>LIST OF REPOSITORIES</h1>
-          <ul id="list">
-            <li>
-              <a href="#">link1</a>
-            </li>
-          </ul>
+        <div class="container-fluid p-3 rounded border border-dark bg-warning" id="repo">
+          <!-- List of repositories -->
         </div>
       </div>
     </div>
-
-
 
     <!-- JavaScripts -->
     <script src='https://apis.google.com/js/api.js'></script>

@@ -2,19 +2,26 @@ let repositories;
 
 const execute = () => {
   let uname= document.getElementById('username').value;
+  //api for the username
   let apiCall1 = `https://api.github.com/users/${uname}`;
+  //api for repository
   let apicall2 = `https://api.github.com/users/${uname}/repos`;
-  $.getJSON(apiCall1, (detail) => {
-    let fullname   = detail.name;
-    let username   = detail.login;
-    let aviurl     = detail.avatar_url;
-    let profileurl = detail.html_url;
-    let location   = detail.location;
-    let followersnum = detail.followers;
-    let followingnum = detail.following;
-    let reposnum     = detail.public_repos;
+  $.getJSON(apiCall1, (json) => {
+    let fullname   = json.name;
+    let username   = json.login;
+    let aviurl     = json.avatar_url;
+    let profileurl = json.html_url;
+    let followersnum = json.followers;
+    let followingnum = json.following;
+    let reposnum     = json.public_repos;
+
+    if(fullname == undefined) { 
+      fullname = username; 
+    }
+
     document.getElementById('view').style.display = 'block';
     document.getElementById('result').innerHTML = `
+    <h1 class="text-center pt-2">USER DETAILS</h1>
     <div class="row p-3">
       <div class="col-md-3">
         <img class="profile mt-3" src=${aviurl} alt="porfile image">
@@ -27,30 +34,36 @@ const execute = () => {
         <h3>FOLLOWING: <span>${followingnum}</span></h3>
         <h3>NUMBER OF REPOSITORIES: <span>${reposnum}</span></h3>
       </div>
-    </div>`;
+    </div>`; 
     
-    // $.getJSON(apicall2, function(json){
-    //   repositories = json;   
-    //   outputPageContent();                
-    // });          
+    let repositories, outhtml;
+    $.getJSON(apicall2, function(json){
+      repositories = json;   
+      outputPageContent();                
+    });          
+
+    function outputPageContent() {
+      if(repositories.length == 0) {
+        outhtml = '<h1>No Repositories!</h1>'; 
+      }
+      else {
+        outhtml = `<h1>LIST OF REPOSITORIES</h1><ul>`;
+        $.each(repositories, function(index) {
+          outhtml = outhtml + `<li><a href="${repositories[index].html_url}" target="_blank">${repositories[index].name}</a></li>`;
+        });
+        outhtml = outhtml + '</ul>'; 
+      }
+      document.getElementById('repo').innerHTML = outhtml;
+    }
   })
   .fail(() => { 
+    alert("No such username exists!");
+    document.getElementById('username').value = "";
     document.getElementById('view').style.display = 'block';
     document.getElementById('result').innerHTML = "Not Available";
+    document.getElementById('repo').innerHTML = "Not Available";
   });
 };
-
-// let outputPageContent = () => {
-//   if(repositories.length == 0) { outhtml = outhtml + '<p>No repos!</p></div>'; }
-//   else {
-//     outhtml = outhtml + '<p><strong>Repos List:</strong></p> <ul>';
-//     $.each(repositories, function(index) {
-//       outhtml = outhtml + '<li><a href="'+repositories[index].html_url+'" target="_blank">'+repositories[index].name + '</a></li>';
-//     });
-//     outhtml = outhtml + '</ul></div>'; 
-//   }
-//   $('#ghapidata').html(outhtml);
-// } 
 
 document.getElementById('search').addEventListener('click', execute);
 
@@ -59,4 +72,3 @@ document.getElementById('username').addEventListener('keydown', (event) => {
     execute();
   }
 });
-

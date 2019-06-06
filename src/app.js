@@ -48,8 +48,8 @@ const execute = () => {
       }
       else {
         outhtml = `<h1>LIST OF REPOSITORIES</h1><ul>`;
-        $.each(repositories, function(index) {
-          outhtml = outhtml + `<li><a href="${repositories[index].html_url}" target="_blank">${repositories[index].name}</a></li>`;
+        repositories.forEach((index) => {
+          outhtml = outhtml + `<li><a href="${index.html_url}" target="_blank">${index.html_url}</a></li>`;
         });
         outhtml = outhtml + '</ul>'; 
       }

@@ -34,8 +34,8 @@ var execute = function execute() {
         outhtml = '<h1>No Repositories!</h1>';
       } else {
         outhtml = "<h1>LIST OF REPOSITORIES</h1><ul>";
-        $.each(repositories, function (index) {
-          outhtml = outhtml + "<li><a href=\"".concat(repositories[index].html_url, "\" target=\"_blank\">").concat(repositories[index].name, "</a></li>");
+        repositories.forEach(function (index) {
+          outhtml = outhtml + "<li><a href=\"".concat(index.html_url, "\" target=\"_blank\">").concat(index.html_url, "</a></li>");
         });
         outhtml = outhtml + '</ul>';
       }
